@@ -36,4 +36,7 @@ public class Membro {
 
     @Column(name = "mensagem", nullable = true)
     private String mensagem;
+
+    @Column(name = "setor", nullable = true)
+    private String setor;
 }

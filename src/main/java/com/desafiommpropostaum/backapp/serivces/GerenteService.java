@@ -27,6 +27,7 @@ public class GerenteService {
         gerente.setTelefone(gerenteResquestDTO.telefone());
         gerente.setSenha(gerenteResquestDTO.senha());
         gerente.setMensagem(gerenteResquestDTO.mensagem());
+        gerente.setSetor(gerenteResquestDTO.setor());
 
         return gerenteRepository.save(gerente);
     }

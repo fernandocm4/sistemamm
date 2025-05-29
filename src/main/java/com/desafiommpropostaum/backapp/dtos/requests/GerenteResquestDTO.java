@@ -5,7 +5,8 @@ public record GerenteResquestDTO(
     String email,
     String telefone,
     String senha,
-    String mensagem
+    String mensagem,
+    String setor
 ) {
     
 }

@@ -38,4 +38,7 @@ public class Gerente {
 
     @Column(name = "mensagem", nullable = true)
     private String mensagem;
+
+    @Column(name = "setor", nullable = true)
+    private String setor;
 }

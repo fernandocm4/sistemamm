@@ -8,7 +8,8 @@ public record MembroResponseDTO(
     String nome,
     String email,
     String telefone,
-    String mensagem
+    String mensagem,
+    String setor
 ) {
     public MembroResponseDTO(Membro membro) {
         this(
@@ -16,7 +17,8 @@ public record MembroResponseDTO(
             membro.getNome(),
             membro.getEmail(),
             membro.getTelefone(),
-            membro.getMensagem()
+            membro.getMensagem(),
+            membro.getSetor()
         );
     }
 }

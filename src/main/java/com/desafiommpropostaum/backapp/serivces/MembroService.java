@@ -28,6 +28,7 @@ public class MembroService {
         membro.setEmail(membroRequestDTO.email());
         membro.setTelefone(membroRequestDTO.telefone());
         membro.setMensagem(membroRequestDTO.mensagem());
+        membro.setSetor(membroRequestDTO.setor());
 
         return membroRepository.save(membro);
     }

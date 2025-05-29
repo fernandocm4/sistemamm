@@ -4,7 +4,8 @@ public record MembroRequestDTO(
     String nome,
     String email,
     String telefone,
-    String mensagem
+    String mensagem,
+    String setor
 ) {
     
 }

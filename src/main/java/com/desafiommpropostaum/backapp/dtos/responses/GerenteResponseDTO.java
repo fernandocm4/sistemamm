@@ -9,7 +9,8 @@ public record GerenteResponseDTO(
     String email,
     String telefone,
     String senha,
-    String mensagem
+    String mensagem,
+    String setor
 ) {
     public GerenteResponseDTO(Gerente gerente) {
         this(
@@ -18,7 +19,8 @@ public record GerenteResponseDTO(
             gerente.getEmail(),
             gerente.getTelefone(),
             gerente.getSenha(),
-            gerente.getMensagem()
+            gerente.getMensagem(),
+            gerente.getSetor()
         );
     }
 }
