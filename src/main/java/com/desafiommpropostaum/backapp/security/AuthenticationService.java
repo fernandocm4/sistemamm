@@ -27,7 +27,6 @@ public class AuthenticationService {
         return jtwService.generateToken(authentication);
     }
 
-
     @Transactional
     public ResponseEntity<?> registerUser(UserRequestDTO userRequestDTO) {
         if (userRepository.findByUsername(userRequestDTO.username()).isPresent()) {
@@ -35,8 +34,12 @@ public class AuthenticationService {
         }
 
         User user = new User();
+        user.setNome(userRequestDTO.nome());
         user.setUsername(userRequestDTO.username());
         user.setPassword(passwordEncoder.encode(userRequestDTO.password()));
+        user.setMessage(userRequestDTO.message());
+        user.setPhone(userRequestDTO.phone());
+        user.setSetor(userRequestDTO.setor());
 
         String roleName;
         if ("GERENTE".equalsIgnoreCase(userRequestDTO.role())) {
@@ -49,10 +52,7 @@ public class AuthenticationService {
 
         user.setRole(roleName);
 
-
-
         userRepository.save(user);
         return ResponseEntity.ok("Usuário " + userRequestDTO.username() + " registrado com sucesso como " + userRequestDTO.role() + "!");
-
     }
 }

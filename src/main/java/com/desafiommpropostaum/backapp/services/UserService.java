@@ -1,10 +1,15 @@
-package com.desafiommpropostaum.backapp.serivces;
+package com.desafiommpropostaum.backapp.services;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.desafiommpropostaum.backapp.dtos.requests.UserRequestDTO;
+import com.desafiommpropostaum.backapp.dtos.responses.UserResponseDTO;
 import com.desafiommpropostaum.backapp.models.User;
 import com.desafiommpropostaum.backapp.repositories.UserRepository;
 
@@ -31,5 +36,13 @@ public class UserService {
         user.setRole("GERENTE_ROLE");
 
         return userRepository.save(user);
+    }
+
+    public User getUser(UUID id) {
+        return userRepository.findById(id).get();
+    }
+
+    public List<UserResponseDTO> getAllUsers() {
+        return userRepository.findAll().stream().map(UserResponseDTO::new).collect(Collectors.toList());
     }
 }

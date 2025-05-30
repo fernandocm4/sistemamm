@@ -26,8 +26,6 @@ public class JtwService {
         .map(GrantedAuthority::getAuthority)
         .collect(Collectors.joining(" "));
 
-        System.out.println("DEBUG: Claims scopes no JWT: " + scopes);
-
         var claims = JwtClaimsSet.builder()
         .issuer("spring-security-jwt")
         .issuedAt(now)

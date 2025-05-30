@@ -24,7 +24,10 @@ public class User {
     @Column(name = "user_id", unique = true, nullable = false, updatable = false)
     private UUID user_id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "name", nullable = false)
+    private String nome;
+
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -32,5 +35,14 @@ public class User {
 
     @Column(name = "role", nullable = false)
     private String role;
+
+    @Column(name = "setor", nullable = true)
+    private String setor;
+
+    @Column(name = "message", nullable = true)
+    private String message;
+
+    @Column(name = "phone", nullable = false)
+    private String phone;
 
 }

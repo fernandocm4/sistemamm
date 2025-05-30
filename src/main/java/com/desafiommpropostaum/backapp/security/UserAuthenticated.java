@@ -19,7 +19,7 @@ public class UserAuthenticated implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("DEBUG: UserAuthenticated retornando authorities: " + user.getRole());
+        
         return List.of(new SimpleGrantedAuthority(user.getRole()));
     }
 
