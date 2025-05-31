@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.desafiommpropostaum.backapp.dtos.requests.MemberRequestDTO;
+import com.desafiommpropostaum.backapp.dtos.requests.UpdateUserRequestDTO;
 import com.desafiommpropostaum.backapp.dtos.requests.UserRequestDTO;
 import com.desafiommpropostaum.backapp.dtos.responses.UserResponseDTO;
 import com.desafiommpropostaum.backapp.models.User;
@@ -44,5 +46,55 @@ public class UserService {
 
     public List<UserResponseDTO> getAllUsers() {
         return userRepository.findAll().stream().map(UserResponseDTO::new).collect(Collectors.toList());
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+    @Transactional
+    public void deleteUser(UUID id) {
+        if(!userRepository.existsById(id)) {
+            throw new RuntimeException("usuario nao encontrado");
+        }
+        userRepository.deleteById(id);
+    }
+
+    @Transactional
+    public UserResponseDTO updateUser(UpdateUserRequestDTO updateUserRequestDTO, UUID id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+
+        if(updateUserRequestDTO.nome() != null && !updateUserRequestDTO.nome().isBlank()) {
+            user.setNome(updateUserRequestDTO.nome());
+        }
+        if(updateUserRequestDTO.username() != null && !updateUserRequestDTO.username().isBlank()) {
+            user.setUsername(updateUserRequestDTO.username());
+        }
+        if(updateUserRequestDTO.phone() != null && !updateUserRequestDTO.phone().isBlank()) {
+            user.setPhone(updateUserRequestDTO.phone());
+        }
+
+        User updatedUser = userRepository.save(user);
+
+        return new UserResponseDTO(updatedUser);
+    }
+
+    @Transactional
+    public UserResponseDTO updateProfile(MemberRequestDTO memberRequestDTO, UUID id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
+
+        if(memberRequestDTO.message() != null && !memberRequestDTO.message().isBlank()) {
+            user.setMessage(memberRequestDTO.message());
+        }
+
+        User updatedMember = userRepository.save(user);
+        return new UserResponseDTO(updatedMember);
     }
 }

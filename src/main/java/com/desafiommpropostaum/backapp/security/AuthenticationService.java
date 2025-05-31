@@ -55,4 +55,23 @@ public class AuthenticationService {
         userRepository.save(user);
         return ResponseEntity.ok("Usuário " + userRequestDTO.username() + " registrado com sucesso como " + userRequestDTO.role() + "!");
     }
+
+    @Transactional
+    public ResponseEntity<?> registerMember(UserRequestDTO userRequestDTO) {
+        if (userRepository.findByUsername(userRequestDTO.username()).isPresent()) {
+            return ResponseEntity.badRequest().body("User already exist");
+        }
+
+        User user = new User();
+        user.setNome(userRequestDTO.nome());
+        user.setUsername(userRequestDTO.username());
+        user.setPassword(passwordEncoder.encode(userRequestDTO.password()));
+        user.setMessage(userRequestDTO.message());
+        user.setPhone(userRequestDTO.phone());
+        user.setSetor(userRequestDTO.setor());
+        user.setRole("ROLE_MEMBRO");
+
+        userRepository.save(user);
+        return ResponseEntity.ok("Novo membro" + userRequestDTO.nome() + "adicionado com sucesso!");
+    }
 }

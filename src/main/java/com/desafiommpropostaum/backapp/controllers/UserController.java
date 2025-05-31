@@ -3,16 +3,25 @@ package com.desafiommpropostaum.backapp.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.desafiommpropostaum.backapp.dtos.requests.MemberRequestDTO;
+import com.desafiommpropostaum.backapp.dtos.requests.UpdateUserRequestDTO;
+import com.desafiommpropostaum.backapp.dtos.requests.UserRequestDTO;
 import com.desafiommpropostaum.backapp.dtos.responses.UserResponseDTO;
 import com.desafiommpropostaum.backapp.models.User;
+import com.desafiommpropostaum.backapp.security.AuthenticationService;
 import com.desafiommpropostaum.backapp.services.UserService;
 
 @RestController
@@ -21,8 +30,12 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    private final AuthenticationService authenticationService;
+
+    public UserController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
         
 
@@ -38,11 +51,55 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(id));
     }
 
-    @GetMapping("/gerente")
+
+
+    @GetMapping("/manage")
     @PreAuthorize("hasRole('ROLE_GERENTE')")
-    public ResponseEntity<String> getGerentPage() {
+    public ResponseEntity<String> modifyUser() {
         return ResponseEntity.ok("Página do gerente");
     }
 
+    @PostMapping("/manage/register")
+    @PreAuthorize("hasRole('ROLE_GERENTE')")
+    public ResponseEntity<?> registerMember(@RequestBody UserRequestDTO userRequestDTO) {
+        return authenticationService.registerMember(userRequestDTO);
+    }
+
+    @PutMapping("/manage/{id}")
+    @PreAuthorize("hasRole('ROLE_GERENTE')")
+    public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UpdateUserRequestDTO updateUserRequestDTO, @PathVariable UUID id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(updateUserRequestDTO, id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/manage/{id}")
+    @PreAuthorize("hasRole('ROLE_GERENTE')")
+    public ResponseEntity<String> excludeUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Usuario deletado com sucesso");
+    }
+
+
+
+
+
+    @GetMapping("profile/{id}")
+    @PreAuthorize("hasRole('ROLE_MEMBRO')")
+    public ResponseEntity<String> memberProfile(@PathVariable UUID id) {
+        return ResponseEntity.ok("Página do perfil de membro");
+    }
+
+    @PutMapping("profile/{id}")
+    @PreAuthorize("hasRole('ROLE_MEMBRO')")
+    public ResponseEntity<UserResponseDTO> updateProfile(@RequestBody MemberRequestDTO memberRequestDTO, @PathVariable UUID id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.updateProfile(memberRequestDTO, id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     
 }
