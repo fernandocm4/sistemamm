@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,13 +39,14 @@ public class UserController {
         this.authenticationService = authenticationService;
     }
         
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_GERENTE', 'ROLE_MEMBRO')")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_GERENTE', 'ROLE_MEMBRO')")
     public ResponseEntity<User> getUser(@PathVariable UUID id) {
@@ -52,19 +54,21 @@ public class UserController {
     }
 
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/manage")
     @PreAuthorize("hasRole('ROLE_GERENTE')")
     public ResponseEntity<String> modifyUser() {
         return ResponseEntity.ok("Página do gerente");
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/manage/register")
     @PreAuthorize("hasRole('ROLE_GERENTE')")
     public ResponseEntity<?> registerMember(@RequestBody UserRequestDTO userRequestDTO) {
         return authenticationService.registerMember(userRequestDTO);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/manage/{id}")
     @PreAuthorize("hasRole('ROLE_GERENTE')")
     public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UpdateUserRequestDTO updateUserRequestDTO, @PathVariable UUID id) {
@@ -75,6 +79,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/manage/{id}")
     @PreAuthorize("hasRole('ROLE_GERENTE')")
     public ResponseEntity<String> excludeUser(@PathVariable UUID id) {
@@ -85,13 +90,14 @@ public class UserController {
 
 
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("profile/{id}")
     @PreAuthorize("hasRole('ROLE_MEMBRO')")
     public ResponseEntity<String> memberProfile(@PathVariable UUID id) {
         return ResponseEntity.ok("Página do perfil de membro");
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("profile/{id}")
     @PreAuthorize("hasRole('ROLE_MEMBRO')")
     public ResponseEntity<UserResponseDTO> updateProfile(@RequestBody MemberRequestDTO memberRequestDTO, @PathVariable UUID id) {
