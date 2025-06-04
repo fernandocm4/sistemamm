@@ -7,7 +7,8 @@ public record UserRequestDTO(
     String role,
     String setor,
     String message,
-    String phone
+    String phone,
+    String profile
 ) {
     
 }

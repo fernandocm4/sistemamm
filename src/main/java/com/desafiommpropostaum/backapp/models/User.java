@@ -45,4 +45,6 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
+    @Column(name = "profile", nullable = true)
+    private String profile;
 }

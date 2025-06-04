@@ -1,5 +1,6 @@
 package com.desafiommpropostaum.backapp.controllers;
 
+
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.desafiommpropostaum.backapp.dtos.requests.MemberRequestDTO;
 import com.desafiommpropostaum.backapp.dtos.requests.UpdateUserRequestDTO;
@@ -31,12 +34,14 @@ public class UserController {
 
     private final UserService userService;
 
+
     @Autowired
     private final AuthenticationService authenticationService;
 
     public UserController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
         this.authenticationService = authenticationService;
+
     }
         
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -84,7 +89,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_GERENTE')")
     public ResponseEntity<String> excludeUser(@PathVariable UUID id) {
         userService.deleteUser(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Usuario deletado com sucesso");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
@@ -99,7 +104,7 @@ public class UserController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("profile/{id}")
-    @PreAuthorize("hasRole('ROLE_MEMBRO')")
+    @PreAuthorize("hasAnyRole('ROLE_GERENTE', 'ROLE_MEMBRO')")
     public ResponseEntity<UserResponseDTO> updateProfile(@RequestBody MemberRequestDTO memberRequestDTO, @PathVariable UUID id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userService.updateProfile(memberRequestDTO, id));
@@ -107,5 +112,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    
+
     
 }

@@ -12,7 +12,8 @@ public record UserResponseDTO(
     String role,
     String setor,
     String message,
-    String phone
+    String phone,
+    String profile
 ) {
     public UserResponseDTO(User user) {
         this(
@@ -23,7 +24,8 @@ public record UserResponseDTO(
             user.getRole(),
             user.getSetor(),
             user.getMessage(),
-            user.getPhone()
+            user.getPhone(),
+            user.getProfile()
         );
     }
 }

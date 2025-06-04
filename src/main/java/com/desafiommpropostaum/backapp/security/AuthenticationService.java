@@ -1,5 +1,7 @@
 package com.desafiommpropostaum.backapp.security;
 
+
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,7 +55,7 @@ public class AuthenticationService {
         user.setRole(roleName);
 
         userRepository.save(user);
-        return ResponseEntity.ok("Usuário " + userRequestDTO.username() + " registrado com sucesso como " + userRequestDTO.role() + "!");
+        return ResponseEntity.ok().build();
     }
 
     @Transactional
@@ -72,6 +74,10 @@ public class AuthenticationService {
         user.setRole("ROLE_MEMBRO");
 
         userRepository.save(user);
-        return ResponseEntity.ok("Novo membro" + userRequestDTO.nome() + "adicionado com sucesso!");
+
+            
+
+
+        return ResponseEntity.ok().build();
     }
 }

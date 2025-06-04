@@ -92,6 +92,7 @@ public class UserService {
 
         if(memberRequestDTO.message() != null && !memberRequestDTO.message().isBlank()) {
             user.setMessage(memberRequestDTO.message());
+            user.setPassword(passwordEncoder.encode(memberRequestDTO.password()));
         }
 
         User updatedMember = userRepository.save(user);
