@@ -49,16 +49,6 @@ public class UserService {
     }
 
 
-
-
-
-
-
-
-
-
-    
-
     @Transactional
     public void deleteUser(UUID id) {
         if(!userRepository.existsById(id)) {
@@ -79,6 +69,9 @@ public class UserService {
         }
         if(updateUserRequestDTO.phone() != null && !updateUserRequestDTO.phone().isBlank()) {
             user.setPhone(updateUserRequestDTO.phone());
+        }
+        if(updateUserRequestDTO.setor() != null && !updateUserRequestDTO.setor().isBlank()) {
+            user.setSetor(updateUserRequestDTO.setor());
         }
 
         User updatedUser = userRepository.save(user);
