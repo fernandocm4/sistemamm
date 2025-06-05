@@ -156,6 +156,9 @@ public class UserService {
 
         if(memberRequestDTO.message() != null && !memberRequestDTO.message().isBlank()) {
             user.setMessage(memberRequestDTO.message());
+            
+        }
+        if(memberRequestDTO.password() != null && !memberRequestDTO.password().isBlank()) {
             user.setPassword(passwordEncoder.encode(memberRequestDTO.password()));
         }
 
