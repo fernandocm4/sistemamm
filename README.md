@@ -52,6 +52,32 @@ Você pode nos ajudar criando um sisteminha que permita a armazenagem do nome, e
 ![diagrama_de_classes](https://github.com/user-attachments/assets/467c114e-39fe-4774-946c-442255c8aad3)
 
 
+<h1>ENDPOINTS</h1>
+
+| Método | Função | Rota |
+| ---------- | ------ | ---- |
+| GET | Listar todos os membros | /members |
+| GET | Listar informações do perfil de membro | /members/:user_id |
+| POST | Registrar um novo membro | /members/manage/register |
+| POST | Fazer autenticação de usuário no sistema | /authenticate |
+| POST | Registrar um usuário como admin | /register |
+| PUT | Alterar informações de um membro | /members/manage/:user_id |
+| PUT | Alterar perfil | /members/profile/:user_id |
+| DELETE | Remover um membro | /members/manage/:user_id |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <h1>Tecnologias utilizadas</h1>
 
 | Tecnologia | Versão | Link |
@@ -61,5 +87,8 @@ Você pode nos ajudar criando um sisteminha que permita a armazenagem do nome, e
 | Angular | 20 | https://angular.dev/overview |
 | Tailwindcss | 4.1 | https://tailwindcss.com/docs/installation/using-vite |
 | PostgreSQL (Ubuntu) | 16.9 | https://www.postgresql.org/download/ |
+| H2 Database (Facilitar testes) | -- | https://www.h2database.com/html/main.html |
+
+
 
 
