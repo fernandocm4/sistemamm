@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -105,12 +106,22 @@ public class UserController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("profile/{id}")
     @PreAuthorize("hasAnyRole('ROLE_GERENTE', 'ROLE_MEMBRO')")
-    public ResponseEntity<UserResponseDTO> updateProfile(@RequestBody MemberRequestDTO memberRequestDTO, @PathVariable UUID id) {
+    public ResponseEntity<UserResponseDTO> updateProfile(@RequestBody MemberRequestDTO memberRequestDTO, @PathVariable UUID id) throws Exception {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userService.updateProfile(memberRequestDTO, id));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        } catch (AccessDeniedException e) { // Catch AccessDeniedException do Spring Security
+        System.err.println("Acesso negado: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 403 Forbidden
+     
+    } catch (IllegalArgumentException e) {
+        // Para erros como UUID inválido no JWT ou outros argumentos ruins
+        System.err.println("Requisição inválida: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // 400 Bad Request
+    } catch (RuntimeException e) { // Captura quaisquer outras RuntimeExceptions inesperadas
+        System.err.println("Erro interno do servidor: " + e.getMessage());
+        e.printStackTrace(); // Imprima o stack trace completo para depuração
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+    }
     }
 
     

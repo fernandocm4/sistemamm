@@ -34,6 +34,7 @@ public class AuthenticationService {
         if (userRepository.findByUsername(userRequestDTO.username()).isPresent()) {
             return ResponseEntity.badRequest().body("User already exist");
         }
+        
 
         User user = new User();
         user.setNome(userRequestDTO.nome());
