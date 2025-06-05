@@ -45,7 +45,7 @@ public class SecurityConfig {
         http.cors(cors -> cors.configure(http))//cors
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(
-            auth -> auth.requestMatchers("/authenticate", "/register", "/home").permitAll()
+            auth -> auth.requestMatchers("/authenticate", "/register", "/home", "/h2-console/**").permitAll()
             .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults())
             .oauth2ResourceServer(
