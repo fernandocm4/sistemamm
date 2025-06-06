@@ -104,6 +104,14 @@ Siga corretamente as instruções para que não ocorra problemas.
 - Git | [pode ser baixado aqui.](https://git-scm.com/downloads)
 - OpenSSL - (pode ser usado o GitBash no windows)
 
+Se estiver usando outra versão do Java deve-se alterar no arquivo **pom.xml**
+
+```java
+<properties>
+  <java.version>24</java.version> //alterar aqui de 24 para 21 ou outra versão, testadas com 21 e 24
+</properties>
+```
+
 
 
 
