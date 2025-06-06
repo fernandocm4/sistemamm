@@ -155,3 +155,23 @@ Serão criados dois arquivos 2 arquivos com os nomes **private_key_pkcs8.pem** e
 
 O sistema vai criar automaticamente um usuário admin com o email **admin@lojasmm.com** e senha **admin123**, essas credenciais são necessárias para usar no sistema e podem ser alteradas posteriormente.
 
+
+
+
+### Configurando a aplicação
+
+
+
+https://github.com/user-attachments/assets/d5ac16be-72a4-4b9a-bbc8-738540a95d27
+
+
+
+
+### Testando o sistema
+
+https://github.com/user-attachments/assets/0e29cc7d-099d-453e-a6ec-b1dc851d8337
+
+
+
+
+
