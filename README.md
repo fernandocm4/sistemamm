@@ -82,7 +82,7 @@ Você pode nos ajudar criando um sisteminha que permita a armazenagem do nome, e
 
 | Tecnologia | Versão | Link |
 | ---------- | ------ | ---- |
-| Java | 21 | https://www.oracle.com/br/java/technologies/downloads/#java21 |
+| Java | 24 | https://www.oracle.com/br/java/technologies/downloads/#java21 |
 | SpringBoot | 3.5.0 | https://spring.io/projects/spring-boot#learn |
 | Angular | 20 | https://angular.dev/overview |
 | Tailwindcss | 4.1 | https://tailwindcss.com/docs/installation/using-vite |
@@ -91,4 +91,59 @@ Você pode nos ajudar criando um sisteminha que permita a armazenagem do nome, e
 
 
 
+# Instruções de uso
+
+Siga corretamente as instruções para que não ocorra problemas.
+
+## Requisitos
+
+É necessário que tenha instalado as seguintes ferramentas na sua máquina.
+
+- Node e npm | [pode ser baixado aqui.](https://nodejs.org/en/download)
+- JDK 24 ou 21 | [pode ser baixado aqui.](https://www.oracle.com/br/java/technologies/downloads/)
+- Git | [pode ser baixado aqui.](https://git-scm.com/downloads)
+- OpenSSL - (pode ser usado o GitBash no windows)
+
+
+
+
+
+
+
+
+
+
+
+## Instalação
+
+Crie uma pasta no diretório de sua maquina e execute o git dentro dela com os comandos abaixo.
+
+
+```bash
+git init
+
+git clone https://github.com/fernandocm4/sistemamm.git
+
+git clone https://github.com/fernandocm4/sistemamm-front.git
+```
+
+Após esse processo você encontrará duas pastas, "sistemamm" e "sistemamm-front", backend e frontend respectivamente.
+
+Na pasta **sistemamm** navegue até a pasta **resources** e crie dois arquivos, o primeiro com o nome de **app.key** e o segundo com o nome **app.pub**, depois execute os comandos abaixo
+
+
+
+```bash
+openssl genrsa -out private_key.pem 2048
+
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+
+openssl pkcs8 -topk8 -in private_key.pem -inform pem -out private_key_pkcs8.pem -outform pem -nocrypt
+``` 
+Esses comandos podem ser executados no GitBash para sistemas Windows que não possuam OpenSSL.
+
+Serão criados dois arquivos 2 arquivos com os nomes **private_key_pkcs8.pem** e **public_key.pem**, copie o conteúdo do primeiro arquivo e cole em **app.key** e o conteúdo do segundo arquivo em **app.pub**. Após pode rodar o sistema com *BackappApplication.java*.
+
+
+O sistema vai criar automaticamente um usuário admin com o email **admin@lojasmm.com** e senha **admin123**, essas credenciais são necessárias para usar no sistema e podem ser alteradas posteriormente.
 
